@@ -29,7 +29,7 @@ class Matrix{
             for(int i=0;i<m;i++){
                 for(int j=0;j<Mat.n;j++){
                     temp.arr[i][j] = 0;
-                    for(int k=0;k<Mat.m;k++){
+                    for(int k=0;k<n;k++){
                         temp.arr[i][j] = arr[i][k]*Mat.arr[k][j];
                     }
                 }
