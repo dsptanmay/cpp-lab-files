@@ -37,7 +37,6 @@ class Triangle: public Polygon{
             return;
         }
 };
-
 class Square: public Polygon{
     public:
         Square(){
