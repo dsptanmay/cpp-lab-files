@@ -1,6 +1,5 @@
 #include <iostream>
-#include <cmath>
-
+#include <string>
 using namespace std;
 
 class Fraction
@@ -9,46 +8,50 @@ private:
     int num, den;
 
 public:
-    void simplify(){
-        for(int i=2;i<=num;i++){
-            if(num%i==0 && den%i==0 ){
-                num = num/i;
-                den = den/i;
-            } 
-        }
+    Fraction(int n, int d)
+    {
+        num = n;
+        den = d;
+    }
+    Fraction()
+    {
     }
 
-    void operator>>(Fraction &f)
+    void simplify()
     {
-        cout << "Enter value of numerator:" << endl;
-        cin >> f.num;
-        cout << "Enter value of denominator:" << endl;
-        cin >> f.den;
-    }
-    void operator<<(Fraction &f)
-    {
-        cout << "Fraction is: " << f.num << "/" << f.den << endl;
-    }
-
-    int operator==(Fraction &f1)
-    {
-        float x = f1.num / f1.den;
-        float y = num / den;
-        if (x == y)
+        for (int i = 2; i <= num; i++)
         {
-            return 1;
+            if (num % i == 0 && den % i == 0)
+            {
+                num /= i;
+                den /= i;
+            }
         }
-        return 0;
     }
-    Fraction operator+(Fraction &f1)
+    friend istream &operator>>(istream &i, Fraction &f)
     {
-        Fraction temp;
-        float x, y;
-        x = f1.num * den + num * f1.den;
-        y = f1.den * den;
-
-        temp.num = x;
-        temp.den = y;
+        i >> f.num >> f.den;
+        return i;
+    }
+    friend ostream &operator<<(ostream &out, Fraction &f)
+    {
+        out << "Fraction is : " << f.num << "/" << f.den << endl;
+        return out;
+    }
+    int operator==(Fraction &f)
+    {
+        float f1 = (float)num / den;
+        float f2 = (float)f.num / f.den;
+        if (f1 == f2)
+            return 1;
+        else
+            return 0;
+    }
+    Fraction operator+(Fraction &f)
+    {
+        int n = f.den * num + den * f.num;
+        int d = f.den * den;
+        Fraction temp(n, d);
         return temp;
     }
 };
@@ -56,4 +59,20 @@ public:
 int main()
 {
     Fraction f1, f2;
+    cout << "Enter the numerator and the denominator of the first fraction : " << endl;
+    cin >> f1;
+    cout << "Enter the numerator and the denominator of the second fraction : " << endl;
+    cin >> f2;
+    cout << f1;
+    cout << f2;
+    int res = f1 == f2;
+    if (res == 1)
+        cout << "Fractions are equal" << endl;
+    else
+        cout << "Fractions are not equal" << endl;
+    Fraction f3 = f1 + f2;
+    f3.simplify();
+    cout << f3;
+
+    return 0;
 }
